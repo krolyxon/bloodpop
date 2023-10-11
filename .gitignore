@@ -1,0 +1,4 @@
+imgui
+*.o
+*.ini
+*.db
