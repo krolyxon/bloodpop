@@ -14,8 +14,9 @@ static ImGuiTableFlags flags =
     ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
 
 static ImGuiWindowFlags wflags =
-    // ImGuiWindowFlags_NoDecoration |
-    ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+                                 // ImGuiWindowFlags_NoDecoration |
+                                 // ImGuiWindowFlags_NoMove |
+                                 ImGuiWindowFlags_NoSavedSettings;
 
 Patient patients[MAX];
 static int n = readdb(patients);
@@ -28,8 +29,9 @@ void RenderUI() {
   bool p_open = true;
 
   ImGui::Begin("BloodPop", &p_open, wflags);
-
-  if (ImGui::BeginTabBar("##Lavda")) {
+    ImGui::SeparatorText("Blood Bank Management System");
+  // ImGui::SetWindowFontScale(1.2);
+  if (ImGui::BeginTabBar("##Bloodpop")) {
     if (ImGui::BeginTabItem("Patients")) {
 
       ImGui::BeginTable("Patients", 6, flags);
@@ -76,26 +78,33 @@ void RenderUI() {
       ImGui::Combo("BloodGroup", &group_current, groups, IM_ARRAYSIZE(groups));
       ImGui::InputInt("Age", &age);
 
+      // Set Button Color
+      ImGui::PushStyleColor(ImGuiCol_Button,
+                            (ImVec4)ImColor::HSV(2 / 7.0f, 0.6f, 0.6f));
+
       if (ImGui::Button("Save Patient to Database")) {
         patients[n].name = name;
         patients[n].gender = genders[gender_current];
         patients[n].type = get_patient_type_enum(type_current);
         patients[n].age = age;
         patients[n].group = get_blood_group_enum(group_current);
-        ImGui::Text("%s", patients[n + 1].name.c_str());
-        ImGui::Text("%s", get_patient_type(patients[n + 1].type));
-        ImGui::Text("%s", get_blood_group(patients[n + 1].group));
-        ImGui::Text("%d", age);
-        ImGui::Text("%s", patients[n + 1].gender.c_str());
+        // ImGui::Text("%s", patients[n + 1].name.c_str());
+        // ImGui::Text("%s", get_patient_type(patients[n + 1].type));
+        // ImGui::Text("%s", get_blood_group(patients[n + 1].group));
+        // ImGui::Text("%d", age);
+        // ImGui::Text("%s", patients[n + 1].gender.c_str());
         writedb(patients, n);
         n = readdb(patients);
       }
       ImGui::EndTabItem();
+
+      ImGui::PopStyleColor();
     }
     ImGui::EndTabBar();
   }
 
   // ImGui::ShowDemoWindow();
+  // ImGui::ShowStyleEditor();
   ImGui::End();
 }
 } // namespace BloodPop
