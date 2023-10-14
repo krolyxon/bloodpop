@@ -59,7 +59,6 @@ void RenderUI() {
         ImGui::Text("%s", (get_patient_type(patients[i].type)));
         ImGui::TableNextColumn();
         ImGui::Text("%s", get_blood_group(patients[i].group));
-        ImGui::TableNextColumn();
       }
 
       ImGui::EndTable();
@@ -109,6 +108,7 @@ void RenderUI() {
       ImGui::InputInt("Patient Sr. No.", &del_patient);
       if (ImGui::Button("Delete")) {
         delete_patient(patients[del_patient - 1]);
+        n = readdb(patients);
       }
       ImGui::EndTabItem();
     }

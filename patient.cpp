@@ -42,28 +42,28 @@ const char *get_blood_group(Bloodgroup bl) {
 
 Bloodgroup get_blood_group_enum(int group) {
   switch (group) {
-  case 1:
+  case 0:
     return Apos;
     break;
-  case 2:
+  case 1:
     return Aneg;
     break;
-  case 3:
+  case 2:
     return Bpos;
     break;
-  case 4:
+  case 3:
     return Bneg;
     break;
-  case 5:
+  case 4:
     return Abpos;
     break;
-  case 6:
+  case 5:
     return Abneg;
     break;
-  case 7:
+  case 6:
     return Opos;
     break;
-  case 8:
+  case 7:
     return Oneg;
     break;
   default:
