@@ -31,6 +31,8 @@ public:
 Bloodgroup get_blood_group_enum(int group);
 const char *get_blood_group(Bloodgroup bl);
 const char* get_patient_type(Type type);
+int get_blood_group_int(Bloodgroup bl);
 Type get_patient_type_enum(int type);
 void writedb(Patient pats[], int n);
 int readdb(Patient pats[]);
+void delete_patient(Patient patient);

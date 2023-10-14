@@ -14,9 +14,9 @@ static ImGuiTableFlags flags =
     ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable;
 
 static ImGuiWindowFlags wflags =
-                                 // ImGuiWindowFlags_NoDecoration |
-                                 // ImGuiWindowFlags_NoMove |
-                                 ImGuiWindowFlags_NoSavedSettings;
+    // ImGuiWindowFlags_NoDecoration |
+    // ImGuiWindowFlags_NoMove |
+    ImGuiWindowFlags_NoSavedSettings;
 
 Patient patients[MAX];
 static int n = readdb(patients);
@@ -29,7 +29,7 @@ void RenderUI() {
   bool p_open = true;
 
   ImGui::Begin("BloodPop", &p_open, wflags);
-    ImGui::SeparatorText("Blood Bank Management System");
+  ImGui::SeparatorText("Blood Bank Management System");
   // ImGui::SetWindowFontScale(1.2);
   if (ImGui::BeginTabBar("##Bloodpop")) {
     if (ImGui::BeginTabItem("Patients")) {
@@ -42,6 +42,7 @@ void RenderUI() {
       ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch);
       ImGui::TableSetupColumn("Blood Group",
                               ImGuiTableColumnFlags_WidthStretch);
+
       ImGui::TableHeadersRow();
 
       for (int i = 0; i < n; i++) {
@@ -58,6 +59,7 @@ void RenderUI() {
         ImGui::Text("%s", (get_patient_type(patients[i].type)));
         ImGui::TableNextColumn();
         ImGui::Text("%s", get_blood_group(patients[i].group));
+        ImGui::TableNextColumn();
       }
 
       ImGui::EndTable();
@@ -99,6 +101,16 @@ void RenderUI() {
       ImGui::EndTabItem();
 
       ImGui::PopStyleColor();
+    }
+    if (ImGui::BeginTabItem("Delete Patient")) {
+
+      static int del_patient = 1;
+      ImGui::SeparatorText("Delete a patient");
+      ImGui::InputInt("Patient Sr. No.", &del_patient);
+      if (ImGui::Button("Delete")) {
+        delete_patient(patients[del_patient - 1]);
+      }
+      ImGui::EndTabItem();
     }
     ImGui::EndTabBar();
   }

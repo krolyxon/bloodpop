@@ -1,5 +1,6 @@
 #include "patient.h"
 #include "imgui/imgui.h"
+#include <cstdio>
 #include <fstream>
 #include <ios>
 #include <string>
@@ -71,6 +72,37 @@ Bloodgroup get_blood_group_enum(int group) {
   }
 }
 
+int get_blood_group_int(Bloodgroup bl) {
+  switch (bl) {
+  case Apos:
+    return 0;
+    break;
+  case Aneg:
+    return 1;
+    break;
+  case Bpos:
+    return 2;
+    break;
+  case Bneg:
+    return 3;
+    break;
+  case Abpos:
+    return 4;
+    break;
+  case Abneg:
+    return 5;
+    break;
+  case Opos:
+    return 6;
+    break;
+  case Oneg:
+    return 7;
+    break;
+  default:
+    return 8;
+    break;
+  }
+}
 Type get_patient_type_enum(int type) {
   switch (type) {
   case 1:
@@ -120,7 +152,7 @@ void writedb(Patient pats[], int n) {
   if (file.is_open()) {
     for (int i = 0; i <= n; i++) {
       file << pats[i].name << ";" << pats[i].age << ";" << pats[i].gender << ";"
-           << pats[i].type << ";" << pats[i].group << ";\n";
+           << pats[i].type << ";" << (pats[i].group) << ";\n";
     }
     file.close();
   }
@@ -136,8 +168,35 @@ int readdb(Patient pats[]) {
     pats[i].age = std::atoi(buffer.at(1).c_str());
     pats[i].gender = buffer.at(2);
     pats[i].type = get_patient_type_enum(std::atoi(buffer.at(3).c_str()));
-    pats[i].group = get_blood_group_enum(std::atoi(buffer.at(3).c_str()));
-        i++;
+    pats[i].group = get_blood_group_enum(std::atoi(buffer.at(4).c_str()));
+    i++;
   }
-    return i;
+  return i;
+}
+
+void delete_patient(Patient patient) {
+  std::string del_line;
+  del_line.append(patient.name);
+  del_line.append(";");
+  del_line.append(std::to_string(patient.age));
+  del_line.append(";");
+  del_line.append(patient.gender);
+  del_line.append(";");
+  del_line.append(std::to_string(patient.type));
+  del_line.append(";");
+  del_line.append(std::to_string((get_blood_group_int(patient.group))));
+  del_line.append(";");
+  printf("%s", del_line.c_str());
+  std::ifstream file(FILENAME_DB);
+  std::string line;
+  std::ofstream temp("temp.db");
+  while (std::getline(file, line)) {
+    if (line != del_line) {
+      temp << line << "\n";
+    }
+  }
+  file.close();
+  temp.close();
+  remove(FILENAME_DB);
+  rename("temp.db", FILENAME_DB);
 }
