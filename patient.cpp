@@ -1,6 +1,5 @@
 #include "patient.h"
 #include "imgui/imgui.h"
-#include <cstdio>
 #include <fstream>
 #include <ios>
 #include <string>
@@ -103,6 +102,7 @@ int get_blood_group_int(Bloodgroup bl) {
     break;
   }
 }
+
 Type get_patient_type_enum(int type) {
   switch (type) {
   case 1:
@@ -186,7 +186,6 @@ void delete_patient(Patient patient) {
   del_line.append(";");
   del_line.append(std::to_string((get_blood_group_int(patient.group))));
   del_line.append(";");
-  printf("%s", del_line.c_str());
   std::ifstream file(FILENAME_DB);
   std::string line;
   std::ofstream temp("temp.db");
@@ -199,4 +198,13 @@ void delete_patient(Patient patient) {
   temp.close();
   remove(FILENAME_DB);
   rename("temp.db", FILENAME_DB);
+}
+
+void Patient::set(std::string name, std::string gender, int age,
+                  Bloodgroup group, Type type) {
+  this->name = name;
+  this->gender = gender;
+  this->age = age;
+  this->group = group;
+  this->type = type;
 }
