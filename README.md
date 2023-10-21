@@ -14,6 +14,6 @@ A blood bank management project i did to learn imgui basics
 ```
 
 ## Screenshots
-![](https://raw.githubusercontent.com/krolyxon/tros/master/assets/front-page.png)
-![](https://raw.githubusercontent.com/krolyxon/tros/master/assets/add-patient-page.png)
-![](https://raw.githubusercontent.com/krolyxon/tros/master/assets/delete-patient-page.pn)
+![](https://raw.githubusercontent.com/krolyxon/bloodpop/master/assets/front-page.png)
+![](https://raw.githubusercontent.com/krolyxon/bloodpop/master/assets/add-patient-page.png)
+![](https://raw.githubusercontent.com/krolyxon/bloodpop/master/assets/delete-patient-page.pn)
